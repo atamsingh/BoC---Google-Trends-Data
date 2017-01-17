@@ -1,0 +1,108 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/atamsingh/Desktop/BoC.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}23 Nov 2015, 11:03:38
+
+{com}. 
+. import delimited "/Users/atamsingh/Desktop/gdpSA.csv", encoding(ISO-8859-1)
+{res}{text}(3 vars, 126 obs)
+
+{com}. generate loggdp = log(gdp)
+
+. generate logsa = log(saseries)
+
+. regress saseries date
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       126
+{txt}{hline 13}{c +}{hline 34}   F(1, 124)       = {res}   699.04
+{txt}       Model {c |} {res} 1.2047e+09         1  1.2047e+09   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res}  213700037       124   1723387.4   {txt}R-squared       ={res}    0.8493
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.8481
+{txt}       Total {c |} {res} 1.4184e+09       125  11347284.6   {txt}Root MSE        =   {res} 1312.8
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}    saseries{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}date {c |}{col 14}{res}{space 2} 85.01388{col 26}{space 2} 3.215437{col 37}{space 1}   26.44{col 46}{space 3}0.000{col 54}{space 4} 78.64963{col 67}{space 3} 91.37813
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 74635.05{col 26}{space 2} 235.3024{col 37}{space 1}  317.19{col 46}{space 3}0.000{col 54}{space 4} 74169.32{col 67}{space 3} 75100.78
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. regress gdp saseries
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       126
+{txt}{hline 13}{c +}{hline 34}   F(1, 124)       = {res}   335.91
+{txt}       Model {c |} {res} 5.7547e+11         1  5.7547e+11   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 2.1243e+11       124  1.7132e+09   {txt}R-squared       ={res}    0.7304
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7282
+{txt}       Total {c |} {res} 7.8791e+11       125  6.3033e+09   {txt}Root MSE        =   {res}  41391
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}         gdp{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 4}saseries {c |}{col 14}{res}{space 2} 20.14243{col 26}{space 2} 1.099006{col 37}{space 1}   18.33{col 46}{space 3}0.000{col 54}{space 4} 17.96719{col 67}{space 3} 22.31767
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} -98678.9{col 26}{space 2} 88034.52{col 37}{space 1}   -1.12{col 46}{space 3}0.264{col 54}{space 4}-272923.9{col 67}{space 3} 75566.06
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. twoway (scatter gdp saseries)
+{res}
+{com}. twoway (scatter gdp saseries, sort)
+{res}
+{com}. predict predictedgdp, xb
+
+. twoway (scatter gdp saseries, sort) (line gdp saseries, sort)
+{res}
+{com}. twoway (scatter gdp saseries) (line predictedgdp saseries)
+{res}
+{com}. display twoway (scatter gdp saseries) (line predictedgdp saseries)
+{res}{err}twoway not found
+{txt}{search r(111):r(111);}
+
+{com}. twoway (scatter gdp saseries) (line predictedgdp saseries)
+{res}
+{com}. graph save Graph "/Users/atamsingh/Desktop/Graph.gph"
+{res}{txt}(file /Users/atamsingh/Desktop/Graph.gph saved)
+
+{com}. graph use "/Users/atamsingh/Desktop/Graph.gph"
+{res}
+{com}. regress loggdp logsaseries
+{err}variable {bf}logsaseries{sf} not found
+{txt}{search r(111):r(111);}
+
+{com}. regress loggdp logsa
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       126
+{txt}{hline 13}{c +}{hline 34}   F(1, 124)       = {res}   350.67
+{txt}       Model {c |} {res}   .2509418         1    .2509418   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} .088736353       124  .000715616   {txt}R-squared       ={res}    0.7388
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7367
+{txt}       Total {c |} {res} .339678154       125  .002717425   {txt}Root MSE        =   {res} .02675
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      loggdp{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 7}logsa {c |}{col 14}{res}{space 2} 1.053105{col 26}{space 2} .0562374{col 37}{space 1}   18.73{col 46}{space 3}0.000{col 54}{space 4} .9417957{col 67}{space 3} 1.164415
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 2.339678{col 26}{space 2} .6348858{col 37}{space 1}    3.69{col 46}{space 3}0.000{col 54}{space 4} 1.083062{col 67}{space 3} 3.596295
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. twoway (scatter loggdp logsa) (line predictedgdp saseries)
+{res}
+{com}. predict predictedloggdp
+{txt}(option {bf:xb} assumed; fitted values)
+
+{com}. twoway (scatter loggdp logsa) (line predictedloggdp saseries)
+{res}
+{com}. twoway (scatter loggdp logsa) (line predictedloggdp logsa)
+{res}
+{com}. graph save Graph "/Users/atamsingh/Desktop/log-log.gph"
+{res}{txt}(file /Users/atamsingh/Desktop/log-log.gph saved)
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/atamsingh/Desktop/BoC.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}23 Nov 2015, 11:19:45
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
